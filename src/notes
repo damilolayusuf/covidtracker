@@ -1,0 +1,40 @@
+<View style = {{flexDirection: "row"}}>
+                    <Text style={styles.Text3}> Dry Cough</Text>
+                    <View style = {{flexDirection:"row", alignSelf:"center", flex:1, justifyContent:"flex-end"}}>
+                        <TouchableOpacity  style={status === 1 ? styles.optionsSelected:styles.optionsDeselected} onPress={()=>setStatus(1)} >
+                        <FontAwesome name="plus" size={20} />
+                        </TouchableOpacity>
+                        <TouchableOpacity  style={status === 0 ? styles.optionsSelected:styles.optionsDeselected} onPress={()=>setStatus(0)}>
+                            <FontAwesome name="minus" size={20} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.Text3}> Shortness of Breath</Text>
+                </View>
+                <View>
+                    <Text style={styles.Text3}> Fever</Text>
+                </View>
+                <View>
+                    <Text style={styles.Text3}> None</Text>
+                </View>
+
+
+
+                import {useContext} from 'react';
+import {Context as LocationContext} from '../context/LocationContext';
+import {Context as TrackContext} from '../context/TrackContext'
+import {navigate} from '../navigationRef';
+
+export default ()=> {
+    const {createTracks} = useContext(TrackContext);
+    const {state: {locations,name}, reset} = useContext(LocationContext);
+
+    const saveTrack = async ()=>{
+        await createTracks(name,locations);
+        reset();
+        navigate('TrackList');
+    };
+
+    return [saveTrack]
+}
